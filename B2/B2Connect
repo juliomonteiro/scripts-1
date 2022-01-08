@@ -1,0 +1,15 @@
+import base64
+import json
+import urllib
+
+id_and_key = '0006f659bf22aae000000000b:K000LItcP+ana28ooAHBI6//waB4t9s'
+basic_auth_string = 'Basic ' + base64.b64encode(id_and_key)
+headers = { 'Authorization': basic_auth_string }
+
+request = urllib.Request(
+    'https://api.backblazeb2.com/b2api/v2/b2_authorize_account',
+    headers = headers
+    )
+response = urllib.urlopen(request)
+response_data = json.loads(response.read())
+response.close()

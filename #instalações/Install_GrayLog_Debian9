@@ -1,0 +1,47 @@
+"PREREQUISITOS"
+
+
+apt update && sudo apt upgrade
+apt install apt-transport-https openjdk-8-jre-headless uuid-runtime pwgen
+
+"MONGO"
+
+apt install curl
+curl https://www.mongodb.org/static/pgp/server-4.0.asc | sudo apt-key add -
+echo "deb http://repo.mongodb.org/apt/debian stretch/mongodb-org/4.0 main" | tee /etc/apt/sources.list.d/mongodb-org-4.0.list
+apt-get update
+apt-get install -y mongodb-org
+
+systemctl daemon-reload
+systemctl enable mongod.service
+systemctl restart mongod.service
+
+"Elasticsearch"
+
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add -
+echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" | tee -a /etc/apt/sources.list.d/elastic-5.x.list
+apt update && sudo apt install elasticsearch
+
+"Alterar -  Elasticsearch configuration file (/etc/elasticsearch/elasticsearch.yml"
+"cluster.name: graylog"
+
+systemctl daemon-reload
+systemctl enable elasticsearch.service
+systemctl restart elasticsearch.service
+
+"GRAYLOG"
+
+wget https://packages.graylog2.org/repo/packages/graylog-2.4-repository_latest.deb
+dpkg -i graylog-2.4-repository_latest.deb
+apt update
+apt install graylog-server
+
+NsrNbHkowHnwwnr031IWGycO0fnpCUDAw2CxOf72MPiWBvQchPNtuDWeSEVwcgkwqBBtRQkpSFCScLWrexebPQv73fJoX8Wu
+
+echo -n tkx31Na9 | sha256sum   
+
+"tkx31Na9" = "090acc840c9b23afeef50107b96f2e6229ba63c23e256a40d4e4c9e6bcae501b  -"
+
+systemctl daemon-reload
+systemctl enable graylog-server.service
+systemctl start graylog-server.service
